@@ -19,9 +19,25 @@ const AdminBroMongoose = require('@admin-bro/mongoose');
 AdminBro.registerAdapter(AdminBroMongoose);
 
 const adminBroOptions = new AdminBro({
-  resources: [Project],
-  rootPath: '/admin',
-});
+	resources: [
+    { resource: Project, options: {
+      properties: {
+        description: { type: 'richtext' },
+        created_at: {
+          isVisible: { edit: false, list: true, show: true, filter: true }
+        }
+      }
+   }},
+  ],
+  locale: {
+    translations: {
+      labels: {
+        Project: 'My Projects'
+      }
+    }
+  },
+  rootPath: '/admin'
+})
 
 const router = AdminBroExpress.buildRouter(adminBroOptions);
 
